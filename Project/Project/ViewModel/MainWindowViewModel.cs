@@ -12,9 +12,9 @@ using System.Windows;
 
 namespace Project.ViewModel
 {
-    public class MainWindowViewModel : INotifyPropertyChanged, INotifyCollectionChanged
+    public class MainWindowViewModel
     {
-        public ObservableCollection<ProgramModels> Programs { get; set; } = new ObservableCollection<ProgramModels>();
+        public ObservableCollection<ProgramModels> Programs { get; } = new ObservableCollection<ProgramModels>();
         private FileOpenAndSave _fileOpenAndSave;
 
         public MainWindowViewModel()
@@ -28,29 +28,20 @@ namespace Project.ViewModel
             
         }
 
-        private ProgramModels _selectedProgram;
-        public ProgramModels SelectedProgram
-        {
-            get => _selectedProgram;
-            set
-            {
-                _selectedProgram = value;
-            }
-        }
-
         public void LoadData()
         {
             string _path = $"{Environment.CurrentDirectory}\\Service\\programDataList.json";
             _fileOpenAndSave = new FileOpenAndSave(_path);
             try
             {
-                Programs = _fileOpenAndSave.LoadDate();
+                foreach (var pr in _fileOpenAndSave.LoadDate())
+                    Programs.Add(pr);
             }
             catch (Exception ex)
             {
                 Loger.WriteLog(ex);
                 MessageBox.Show($"Поврежден файл {_path}.");
-                Programs = new ObservableCollection<ProgramModels>();
+                Programs.Clear();
             }
         }
 
@@ -87,11 +78,5 @@ namespace Project.ViewModel
 
             //_fileOpenAndSave.SaveDate(_programs);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
-
-        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

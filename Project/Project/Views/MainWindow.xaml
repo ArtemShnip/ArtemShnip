@@ -51,11 +51,11 @@
 
         <Grid HorizontalAlignment="Right" Width="740" Margin="0,60,0,0">
 
-            <DataGrid x:Name="DataGrid"  Margin="15,0,0,0" ItemsSource="{Binding Programs,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
-                          materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid x:Name="DataGrid"  Margin="15,0,0,0" ItemsSource="{Binding Programs}" CanUserSortColumns="True" AutoGenerateColumns="False"
+                          materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" CanUserAddRows="False" CanUserResizeRows="False">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Path=Id, UpdateSourceTrigger=PropertyChanged}"
+                    <DataGridTextColumn Binding="{Binding Path=Id}"
                                         Header="ID"/>
                     <materialDesign:DataGridTextColumn Binding="{Binding Path=Name}"
                                                            Header="Name"/>

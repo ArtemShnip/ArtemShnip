@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace Project.Models
 {
-    public class ProgramModels : INotifyPropertyChanged, INotifyCollectionChanged
+    public class ProgramModels : INotifyPropertyChanged
     {
         private string _id;
         private string _name;
@@ -26,6 +26,7 @@ namespace Project.Models
                 OnPropertyChanged();
             }
         }
+
         public string Name
         {
             get => _name;
@@ -101,9 +102,10 @@ namespace Project.Models
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
 
         private void OnPropertyChanged([CallerMemberName]string propertyName = "")
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }   
     }
 }
