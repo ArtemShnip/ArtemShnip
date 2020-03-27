@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace Project.Service
 {
-    class Watcher
+    public class Watcher
     {
         private readonly string _path = $"{Environment.CurrentDirectory}\\Service\\programDataArray.xml";
         public static string[] arrayProgramm;
