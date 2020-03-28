@@ -1,79 +1,120 @@
-﻿<Window x:Class="Project.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Project"
-        xmlns:vm="clr-namespace:Project.ViewModel"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="White" Foreground="White" >
-    <Window.DataContext>
-        <vm:MainWindowViewModel/>
-    </Window.DataContext>
+﻿<Window
+    x:Class="Project.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Project"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Project.ViewModel"
+    Width="800"
+    Height="450"
+    Background="White"
+    Foreground="White"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <d:Window.DataContext>
+        <vm:MainWindowViewModel />
+    </d:Window.DataContext>
     <Window.Resources>
         <Storyboard x:Key="MenuOpen">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
-                <EasingDoubleKeyFrame KeyTime="0" Value="60"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200"/>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(FrameworkElement.Width)">
+                <EasingDoubleKeyFrame KeyTime="0" Value="60" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="MenuClose">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
-                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="60"/>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(FrameworkElement.Width)">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="60" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>
 
     <Window.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
-            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}" />
         </EventTrigger>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonCloseMenu">
-            <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
         </EventTrigger>
     </Window.Triggers>
 
-    <Grid Background="LightGray" >
-        <Grid Height="60" VerticalAlignment="Top" Background="#FF9095FF" >
-            <TextBlock Text="ProJect X" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="#FF112AC9"/>
-            <StackPanel VerticalAlignment="Center" Orientation="Horizontal"  HorizontalAlignment="Right" >
-                <TextBlock Text="Additional menu" VerticalAlignment="Center" FontSize="18"/>
-                <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+    <Grid Background="LightGray">
+        <Grid
+            Height="60"
+            VerticalAlignment="Top"
+            Background="#FF9095FF">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="24"
+                Foreground="#FF112AC9"
+                Text="ProJect X" />
+            <StackPanel
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Text="Additional menu" />
+                <materialDesign:PopupBox
+                    Margin="10"
+                    PlacementMode="BottomAndAlignRightEdges"
+                    StaysOpen="False">
                     <StackPanel Width="150">
-                        <Button Content="Setting"/>
-                        <Separator/>
-                        <Button x:Name="ButtonExit" Content="Exit" Click="ButtonExit_Click"/>
+                        <Button Content="Setting" />
+                        <Separator />
+                        <Button
+                            x:Name="ButtonExit"
+                            Click="ButtonExit_Click"
+                            Content="Exit" />
                     </StackPanel>
                 </materialDesign:PopupBox>
             </StackPanel>
         </Grid>
 
-        <Grid HorizontalAlignment="Right" Width="740" Margin="0,60,0,0">
+        <Grid
+            Width="740"
+            Margin="0,60,0,0"
+            HorizontalAlignment="Right">
 
-            <DataGrid x:Name="DataGrid"  Margin="15,0,0,0" ItemsSource="{Binding Programs}" CanUserSortColumns="True" AutoGenerateColumns="False"
-                          materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" CanUserAddRows="False" CanUserResizeRows="False">
+            <DataGrid
+                x:Name="DataGrid"
+                Margin="15,0,0,0"
+                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                CanUserResizeRows="False"
+                CanUserSortColumns="True"
+                ItemsSource="{Binding Programs}">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Path=Id}"
-                                        Header="ID"/>
-                    <materialDesign:DataGridTextColumn Binding="{Binding Path=Name}"
-                                                           Header="Name"/>
-                    <materialDesign:DataGridTextColumn Binding="{Binding Path=Date}"
-                                                           Header="Date"
-                                                           MaxLength="255" />
-                    <materialDesign:DataGridTextColumn Binding="{Binding Path=TimeStart, StringFormat={}{0:t}}"
-                                                           Header="Time start"
-                                                           MaxLength="255" />
-                    <materialDesign:DataGridTextColumn Binding="{Binding Path=TimeStop, StringFormat={}{0:t}}"
-                                                           Header="Time stop"
-                                                           MaxLength="255" />
-                    <materialDesign:DataGridTextColumn Binding="{Binding Path=LongTime}"
-                                                        Header="Long time"
-                                                        Width="120"/>
-                    <materialDesign:DataGridTextColumn Binding="{Binding Path=MaxIndex}"
-                                                        Header="MaxIndex"
-                                                        Width="120"/>
+                    <DataGridTextColumn Binding="{Binding Path=Id}" Header="ID" />
+                    <materialDesign:DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Path=Date}"
+                        Header="Date"
+                        MaxLength="255" />
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Path=TimeStart, StringFormat={}{0:t}}"
+                        Header="Time start"
+                        MaxLength="255" />
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Path=TimeStop, StringFormat={}{0:t}}"
+                        Header="Time stop"
+                        MaxLength="255" />
+                    <materialDesign:DataGridTextColumn
+                        Width="120"
+                        Binding="{Binding Path=LongTime}"
+                        Header="Long time" />
+                    <materialDesign:DataGridTextColumn
+                        Width="120"
+                        Binding="{Binding Path=MaxIndex}"
+                        Header="MaxIndex" />
 
 
                     <!--<DataGridTextColumn.HeaderStyle>
@@ -94,7 +135,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>-->
 
-                    <!-- use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo -->
+                    <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
                     <!--<materialDesign:DataGridComboBoxColumn Header="Client" IsEditable="True"
                                                                SelectedValueBinding="{Binding Client}">
                          Setting the editing element style allows access to all of the combo box's properties
@@ -103,38 +144,97 @@
                                     <Setter Property="IsEditable" Value="True" />
                                 </Style>
                             </materialDesign:MaterialDataGridComboBoxColumn.EditingElementStyle>
-                    </materialDesign:DataGridComboBoxColumn> -->
+                    </materialDesign:DataGridComboBoxColumn>-->
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
 
-        <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="#FF3D42BD">
+        <Grid
+            x:Name="GridMenu"
+            Width="60"
+            HorizontalAlignment="Left"
+            Background="#FF3D42BD">
             <StackPanel>
                 <Grid Height="60" Background="White">
-                    <Button x:Name="ButtonCloseMenu" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="ButtonCloseMenu_Click">
-                        <materialDesign:PackIcon Foreground="#FF101359" Kind="ArrowLeft" Width="25" Height="25"/>
+                    <Button
+                        x:Name="ButtonCloseMenu"
+                        Width="60"
+                        Height="60"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Click="ButtonCloseMenu_Click"
+                        Visibility="Collapsed">
+                        <materialDesign:PackIcon
+                            Width="25"
+                            Height="25"
+                            Foreground="#FF101359"
+                            Kind="ArrowLeft" />
                     </Button>
-                    <Button x:Name="ButtonOpenMenu" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="ButtonOpenMenu_Click">
-                        <materialDesign:PackIcon Foreground="#FF101359" Kind="Menu" Width="30" Height="30"/>
+                    <Button
+                        x:Name="ButtonOpenMenu"
+                        Width="60"
+                        Height="60"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Click="ButtonOpenMenu_Click">
+                        <materialDesign:PackIcon
+                            Width="30"
+                            Height="30"
+                            Foreground="#FF101359"
+                            Kind="Menu" />
                     </Button>
                 </Grid>
-                <ListView Foreground="White" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="White">
+                <ListView
+                    Background="White"
+                    Foreground="White"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListViewItem Height="60">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="ViewList" Width="30" Height="30" Margin="6" VerticalAlignment="Center"/>
-                            <TextBlock Text="All track" FontSize="18" VerticalAlignment="Center" Margin="20 10"/>
+                            <materialDesign:PackIcon
+                                Width="30"
+                                Height="30"
+                                Margin="6"
+                                VerticalAlignment="Center"
+                                Kind="ViewList" />
+                            <TextBlock
+                                Margin="20,10"
+                                VerticalAlignment="Center"
+                                FontSize="18"
+                                Text="All track" />
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="60">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Filter" Width="30" Height="30" Margin="6" VerticalAlignment="Center"/>
-                            <TextBlock Text="Filter" FontSize="18" VerticalAlignment="Center" Margin="20 10"/>
+                            <materialDesign:PackIcon
+                                Width="30"
+                                Height="30"
+                                Margin="6"
+                                VerticalAlignment="Center"
+                                Kind="Filter" />
+                            <TextBlock
+                                Margin="20,10"
+                                VerticalAlignment="Center"
+                                FontSize="18"
+                                Text="Filter" />
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Height="60" >
+                    <ListViewItem Height="60">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="CalculatorVariant" Width="30" Margin="6" Height="30" VerticalAlignment="Center"/>
-                            <TextBlock Text="Calculator" FontSize="18" VerticalAlignment="Center" Margin="20 10"/>
+                            <materialDesign:PackIcon
+                                Width="30"
+                                Height="30"
+                                Margin="6"
+                                VerticalAlignment="Center"
+                                Kind="CalculatorVariant" />
+                            <TextBlock
+                                Margin="20,10"
+                                VerticalAlignment="Center"
+                                FontSize="18"
+                                Text="Calculator" />
                         </StackPanel>
                     </ListViewItem>
                 </ListView>
