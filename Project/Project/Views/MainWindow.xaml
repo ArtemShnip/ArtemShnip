@@ -13,7 +13,7 @@
     Foreground="White"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d">
+    mc:Ignorable="d" WindowStyle="None">
     <d:Window.DataContext>
         <vm:MainWindowViewModel />
     </d:Window.DataContext>
@@ -21,12 +21,12 @@
         <Storyboard x:Key="MenuOpen">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(FrameworkElement.Width)">
                 <EasingDoubleKeyFrame KeyTime="0" Value="60" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="160" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="MenuClose">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(FrameworkElement.Width)">
-                <EasingDoubleKeyFrame KeyTime="0" Value="200" />
+                <EasingDoubleKeyFrame KeyTime="0" Value="160" />
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="60" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
@@ -51,102 +51,23 @@
                 VerticalAlignment="Center"
                 FontSize="24"
                 Foreground="#FF112AC9"
-                Text="ProJect X" />
+                Text="ProJect X" FontFamily="a_CopperGothCaps" />
             <StackPanel
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
-                <TextBlock
-                    VerticalAlignment="Center"
-                    FontSize="18"
-                    Text="Additional menu" />
-                <materialDesign:PopupBox
-                    Margin="10"
-                    PlacementMode="BottomAndAlignRightEdges"
-                    StaysOpen="False">
-                    <StackPanel Width="150">
-                        <Button Content="Setting" />
-                        <Separator />
-                        <Button
-                            x:Name="ButtonExit"
-                            Click="ButtonExit_Click"
-                            Content="Exit" />
-                    </StackPanel>
-                </materialDesign:PopupBox>
+
+                <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Margin="0 0 10 0">
+                    <materialDesign:PackIcon Kind="Settings" Width="20" Height="20"/>
+                </Button>
+                <Button x:Name="ButtonFechar" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Margin="0 0 10 0" Click="ButtonExit_Click">
+                    <materialDesign:PackIcon Kind="Power" Width="25" Height="25"/>
+                </Button>
             </StackPanel>
         </Grid>
 
-        <Grid
-            Width="740"
-            Margin="0,60,0,0"
-            HorizontalAlignment="Right">
-
-            <DataGrid
-                x:Name="DataGrid"
-                Margin="15,0,0,0"
-                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                materialDesign:DataGridAssist.ColumnHeaderPadding="8"
-                AutoGenerateColumns="False"
-                CanUserAddRows="False"
-                CanUserResizeRows="False"
-                CanUserSortColumns="True"
-                ItemsSource="{Binding Programs}">
-
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Path=Id}" Header="ID" />
-                    <materialDesign:DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
-                    <materialDesign:DataGridTextColumn
-                        Binding="{Binding Path=Date}"
-                        Header="Date"
-                        MaxLength="255" />
-                    <materialDesign:DataGridTextColumn
-                        Binding="{Binding Path=TimeStart, StringFormat={}{0:t}}"
-                        Header="Time start"
-                        MaxLength="255" />
-                    <materialDesign:DataGridTextColumn
-                        Binding="{Binding Path=TimeStop, StringFormat={}{0:t}}"
-                        Header="Time stop"
-                        MaxLength="255" />
-                    <materialDesign:DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding Path=LongTime}"
-                        Header="Long time" />
-                    <materialDesign:DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding Path=MaxIndex}"
-                        Header="MaxIndex" />
-
-
-                    <!--<DataGridTextColumn.HeaderStyle>
-                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                <Setter Property="HorizontalAlignment" Value="Right" />
-                                <Setter Property="ContentTemplate">
-                                    <Setter.Value>
-                                        <DataTemplate>
-                                            <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Right"/>
-                                        </DataTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </DataGridTextColumn.HeaderStyle>
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="HorizontalAlignment" Value="Right" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>-->
-
-                    <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
-                    <!--<materialDesign:DataGridComboBoxColumn Header="Client" IsEditable="True"
-                                                               SelectedValueBinding="{Binding Client}">
-                         Setting the editing element style allows access to all of the combo box's properties
-                            <materialDesign:MaterialDataGridComboBoxColumn.EditingElementStyle>
-                                <Style TargetType="ComboBox" BasedOn="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type ComboBox}, ResourceId=MaterialDataGridComboBoxColumnEditingStyle}}" >
-                                    <Setter Property="IsEditable" Value="True" />
-                                </Style>
-                            </materialDesign:MaterialDataGridComboBoxColumn.EditingElementStyle>
-                    </materialDesign:DataGridComboBoxColumn>-->
-                </DataGrid.Columns>
-            </DataGrid>
+        <Grid Margin="60,60,0,0">
+            <Grid x:Name="GridPrincipal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
 
         <Grid
@@ -189,51 +110,53 @@
                     </Button>
                 </Grid>
                 <ListView
+                    x:Name="ListViewMenu"
                     Background="White"
                     Foreground="White"
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    SelectionChanged="ListView_SelectionChanged">
                     <ListViewItem Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon
-                                Width="30"
-                                Height="30"
-                                Margin="6"
+                                Width="27"
+                                Height="27"
+                                Margin="9"
                                 VerticalAlignment="Center"
                                 Kind="ViewList" />
                             <TextBlock
                                 Margin="20,10"
                                 VerticalAlignment="Center"
-                                FontSize="18"
+                                FontSize="15"
                                 Text="All track" />
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon
-                                Width="30"
-                                Height="30"
-                                Margin="6"
+                                Width="27"
+                                Height="27"
+                                Margin="9"
                                 VerticalAlignment="Center"
                                 Kind="Filter" />
                             <TextBlock
                                 Margin="20,10"
                                 VerticalAlignment="Center"
-                                FontSize="18"
+                                FontSize="15"
                                 Text="Filter" />
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon
-                                Width="30"
-                                Height="30"
-                                Margin="6"
+                                Width="25"
+                                Height="25"
+                                Margin="9"
                                 VerticalAlignment="Center"
                                 Kind="CalculatorVariant" />
                             <TextBlock
                                 Margin="20,10"
                                 VerticalAlignment="Center"
-                                FontSize="18"
+                                FontSize="15"
                                 Text="Calculator" />
                         </StackPanel>
                     </ListViewItem>

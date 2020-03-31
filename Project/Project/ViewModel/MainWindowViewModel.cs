@@ -2,12 +2,7 @@
 using Project.Service;
 using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -36,7 +31,7 @@ namespace Project.ViewModel
             //Thread thread = new Thread(Watcher.StartWorkAsync);
             //thread.Start();
             Watcher.NotifyStart += AddNew;
-            Watcher.NotifyStop += AddInSave;
+            Watcher.NotifyStop += AppendInNew;
             Watcher.StartWorkAsync();
             LoadData();
 
@@ -62,8 +57,6 @@ namespace Project.ViewModel
 
         public void AddNew(string id)
         {
-            //Programs[0].MaxIndex += 1;
-
             var proc = Process.GetProcessById(int.Parse(id));
             DateTime date = DateTime.Now;
             var procStart = proc.StartTime;
@@ -79,22 +72,17 @@ namespace Project.ViewModel
                          Id = id,
                          Date = date.ToShortDateString(),
                          Name = proc.ProcessName,
-                         TimeStart = procStart,
-                         ShortTimeStart = procStart.ToString()
+                         TimeStart = procStart
                      });
             }));
 
             //_fileOpenAndSave.SaveDate(_programs);
         }
 
-        public void AddInSave(string id)
+        public void AppendInNew(string id)
         {
-            /// Неэффективно
-            //var element = Programs.First(f => f.Id == id);
-            //var index = Programs.IndexOf(element);
-
             lock(Programs) // Локируем на время проверки
-                for (int index = 0; index < Programs.Count; index++)
+                for (int index = Programs.Count-1; index > 0; index--)
                 {
                     if (Programs[index].Id == id)
                     {

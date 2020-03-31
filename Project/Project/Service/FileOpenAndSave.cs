@@ -3,28 +3,30 @@ using Project.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Xml.Serialization;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace Project.Service
 {
     class FileOpenAndSave
     {
-        private readonly string _path;
+        private readonly string fileNamePrograms = $"{Environment.CurrentDirectory}\\Service\\programDataArray.xml";
+        private readonly string fileHistoryRanPrograms;
 
         public FileOpenAndSave(string path)
         {
-            _path = path;
+            fileHistoryRanPrograms = path;
         }
 
         public ObservableCollection<ProgramModels> LoadDate()
         {
-            var fileExists = File.Exists(_path);
+            var fileExists = File.Exists(fileHistoryRanPrograms);
             if (!fileExists)
             {
-                File.CreateText(_path).Dispose();
+                File.CreateText(fileHistoryRanPrograms).Dispose();
                 return new ObservableCollection<ProgramModels>();
             }
-            using (var reader = File.OpenText(_path))
+            using (var reader = File.OpenText(fileHistoryRanPrograms))
             {
                 var fileText = reader.ReadToEnd();
                 if (fileText != "")
@@ -40,7 +42,7 @@ namespace Project.Service
 
         public void SaveDate(object programModelsList)
         {
-            using (StreamWriter writer = File.CreateText(_path))
+            using (StreamWriter writer = File.CreateText(fileHistoryRanPrograms))
             {
                 string output = JsonConvert.SerializeObject(programModelsList);
                 writer.Write(output);
@@ -49,23 +51,12 @@ namespace Project.Service
 
         public void UpdateListProgram(string name)
         {
-            string pathArray = $"{Environment.CurrentDirectory}\\SaveData\\programDataArray.xml";
-            string[] retVal;
-            XmlSerializer formatter = new XmlSerializer(typeof(string[]));
-            using (var stream = new FileStream(pathArray, FileMode.Open, FileAccess.Read, FileShare.Read))
+            XDocument xDocument = XDocument.Load(fileNamePrograms);
+            XElement xElement = xDocument.Element("programs");
+            if (!xElement.Elements("program").Select(pr => pr.Value).Contains(name))
             {
-                retVal = (string[])formatter.Deserialize(stream);
-            }
-            string[] newArrayProgram = new string[retVal.Length + 1];
-            for (int i = 0; i < retVal.Length; i++)
-            {
-                newArrayProgram[i] = retVal[i];
-                if (i == retVal.Length - 1)
-                    newArrayProgram[i + 1] = name;
-            }
-            using (var stream = new FileStream(pathArray, FileMode.Create, FileAccess.Write, FileShare.Write))
-            {
-                formatter.Serialize(stream, newArrayProgram);
+                xElement.Add(new XElement("program", name));
+                xDocument.Save(fileNamePrograms);
             }
         }
     }

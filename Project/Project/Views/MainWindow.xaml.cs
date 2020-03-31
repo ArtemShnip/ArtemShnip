@@ -1,4 +1,6 @@
 ﻿using Project.ViewModel;
+using Project.Views;
+using System;
 using System.Windows;
 
 namespace Project
@@ -25,6 +27,25 @@ namespace Project
         {
             ButtonOpenMenu.Visibility = Visibility.Collapsed;
             ButtonCloseMenu.Visibility = Visibility.Visible;
+        }
+
+        private void ListView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            int index = ListViewMenu.SelectedIndex;
+
+            switch (index)
+            {
+                case 0:
+                    GridPrincipal.Children.Clear();
+                    GridPrincipal.Children.Add(new UserControlAllPrograms());
+                    break;
+                case 1:
+                    GridPrincipal.Children.Clear();
+                    GridPrincipal.Children.Add(new UserControlFilter());
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

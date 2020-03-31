@@ -11,11 +11,9 @@ namespace Project.Models
         private string _name;
         private string _date;
         private DateTime _timeStart;
-        private string _shortTimeStart;
         private DateTime _timeStop;
         private TimeSpan _longTime;
         private string _client;
-        private int _maxIndex;
 
         public string Id
         {
@@ -36,6 +34,7 @@ namespace Project.Models
                 OnPropertyChanged();
             }
         }
+
         public string Date
         {
             get => _date;
@@ -45,6 +44,7 @@ namespace Project.Models
                 OnPropertyChanged();
             }
         }
+
         public DateTime TimeStart
         {
             get => _timeStart;
@@ -54,15 +54,7 @@ namespace Project.Models
                 OnPropertyChanged();
             }
         }
-        public string ShortTimeStart
-        {
-            get => _shortTimeStart;
-            set
-            {
-                _shortTimeStart = value;
-                OnPropertyChanged();
-            }
-        }
+
         public DateTime TimeStop
         {
             get => _timeStop;
@@ -72,6 +64,7 @@ namespace Project.Models
                 OnPropertyChanged();
             }
         }
+
         public TimeSpan LongTime
         {
             get => _longTime;
@@ -81,22 +74,13 @@ namespace Project.Models
                 OnPropertyChanged();
             }
         }
+
         public string Client
         {
             get => _client;
             set
             {
                 _client = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public int MaxIndex
-        {
-            get => _maxIndex;
-            set
-            {
-                _maxIndex = value;
                 OnPropertyChanged();
             }
         }

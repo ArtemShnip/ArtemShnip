@@ -51,7 +51,7 @@ namespace Project.Service
         void StartProcesses(object programm, EventArrivedEventArgs e)
         {
             string name = e.NewEvent.Properties["ProcessName"].Value.ToString();
-            //if ((WatchPrograms == null || WatchPrograms.Contains(name)) && !runnedProgramms.ContainsValue(name))
+            if ((WatchPrograms == null || WatchPrograms.Contains(name)) && !runnedProgramms.ContainsValue(name))
             {
                 string id = e.NewEvent.Properties["ProcessId"].Value.ToString();
                 runnedProgramms.Add(id, name);
